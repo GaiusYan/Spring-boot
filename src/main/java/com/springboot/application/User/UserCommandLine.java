@@ -4,10 +4,12 @@ import java.util.NoSuchElementException;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class UserCommandLine {
 
-    @Bean
+/*     @Bean
     CommandLineRunner runner(UserRepository repository){
         return args -> {
             UserApplication user = new UserApplication();
@@ -16,5 +18,5 @@ public class UserCommandLine {
             repository.save(user);
             UserApplication saved = repository.findById(user.getId()).orElseThrow(NoSuchElementException::new);
         };
-    }
+    } */
 }
