@@ -23,9 +23,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> 
             auth
                 .requestMatchers("/demo/public").permitAll()  // Accepter cette requête après authentification
-                .requestMatchers("/demo/admin").hasAnyRole("ROLE_ADMIN") //on recupère le role d'administration afin de lui donner la possibilité d'utiliser cette API
-                .requestMatchers("/demo/user").hasRole("ROLE_USER")
-                .requestMatchers("/demo/protected").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
+                .requestMatchers("/demo/admin").hasAnyRole("ADMIN") //on recupère le role d'administration afin de lui donner la possibilité d'utiliser cette API
+                .requestMatchers("/demo/user").hasRole("USER")
+                .requestMatchers("/demo/protected").hasAnyRole("ADMIN", "USER")
                 .anyRequest() //Proteger toutes les autres authentifications
                 .authenticated()).httpBasic();
         return http.build();
@@ -35,14 +35,14 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager userDetailsService(){
         UserDetails user = org.springframework.security.core.userdetails.User.builder()
         .username("user")
-        .password("user")
-        .roles("ROLE_USER")
+        .password(passwordEncoder().encode("user"))
+        .roles("USER")
         .build();
 
         UserDetails admin = org.springframework.security.core.userdetails.User.builder()
         .username("admin")
-        .password("admin")
-        .roles("ROLE_ADMIN")
+        .password(passwordEncoder().encode("admin"))
+        .roles("ADMIN")
         .build();
 
         return new InMemoryUserDetailsManager(user, admin);
